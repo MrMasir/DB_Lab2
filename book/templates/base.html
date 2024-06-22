@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} 图书管理系统 {% endblock %} </title>
+
+    <link rel="stylesheet" type="text/css" href="/static/js/lib/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.css"/>
+    <script src="/static/js/lib/JQuery/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/lib/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+    {% block linkcss %}
+    {% endblock %}
+
+     <link rel=stylesheet type=text/css href="/static/css/style.css">
+
+</head>
+<body>
+    <div class=page>
+      <h1>图书管理系统</h1>
+      <div class=navigation>
+        {% block link %}{% endblock %}
+      </div>
+      <div class=body>
+        {% block body %}{% endblock %}
+       </div>
+    </div>
+</body>
+</html>

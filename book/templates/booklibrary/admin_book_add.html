@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block link %}
+	<a href="{% url 'library:admin_book' %}"> 返回   </a>|
+{% endblock %}
+
+
+{% block body %}
+    {% if error %}
+	<div class=error>
+	  <strong>Errror : </strong> {{error}}
+	</div>
+	{% endif %}
+    <form action="{% url 'library:admin_book_add' %}" method="post"enctype="multipart/form-data">
+        {% csrf_token %}
+        书籍名：<br>{{form.bname}}  <br>
+        作者：<br>{{ form.author }} <br>
+        出版社：<br>{{ form.publish }} <br>
+        出版日期：<br>{{ form.pub_data }} <br>
+        分类：<br>{{ form.book_type }} <br>
+        封面：<br>{{ form.bimage }} <br><br>
+        <input type="submit" value="提交">
+    </form>
+    {% if message %}
+<div>
+  <p>{{ message }}</p>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load extend_fun %}
+{% block link %}
+{% if username %}
+    <a href="{% url 'library:user' %}">{{username}}，欢迎登录</a>
+{% else %}
+    <a href="{% url 'library:user_login' %}">学生登录</a>
+{% endif %}
+<a href="{% url 'library:admin_login' %}">管理员登录</a>
+{% endblock %}
+
+
+{% block body %}
+{% endblock %}

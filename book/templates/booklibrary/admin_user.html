@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+
+
+{% block link %}
+    <a href="{% url 'library:admin_host' %}"> 返回 </a> |
+{% endblock %}
+
+
+{% block body %}
+	<h2> 管理员系统 </h2>
+    {% if error %}
+	<div class=error>
+	  <strong>Errror : </strong> {{error}}
+	</div>
+	{% endif %}
+    <div class=actions>
+	  <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+	    <dd>
+	      <input type="text" name="query" size="80">
+	      <input type="submit" value="查询">
+	    </dd>
+	  </form>
+	</div>
+    {% if users %}
+	<table width="600" border="1" align="center">
+        <tr>
+	        <th align="center"> 用户名 </th>
+	        <th align="center"> 电话号码</th>
+	        <th align="center"> 邮箱 </th>
+	        <th align="center"> 借阅权限 </th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <th align="center"> {{user.username}} </th>
+                <th align="center"> {{user.userphone}}</th>
+                <th align="center"> {{user.email}} </th>
+                <th align="center">
+                    {% if user.uprivilege %}
+                        允许借阅
+                    {% else %}
+                        不允许借阅
+                    {% endif %}
+                </th>
+            </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+    
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+
+
+{% block link %}
+    <a href="{% url 'library:admin_host' %}"> 返回 </a> |
+    
+    <a href="{% url 'library:admin_book_add' %}"> 添加书籍 </a>
+    
+{% endblock %}
+
+
+{% block body %}
+	<h2> 管理员系统 </h2>
+    {% if error %}
+	<div class=error>
+	  <strong>Errror : </strong> {{error}}
+	</div>
+	{% endif %}
+    <div class=actions>
+	  <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+	    <dd>
+	      <select name="item">
+            <option value="bname"> 书名 </option>
+	      </select>
+	      <input type="text" name="query" size="80">
+	      <input type="submit" value="查询">
+	    </dd>
+	  </form>
+	</div>
+    {% if books %}
+	<table width="600" border="1" align="center">
+        <tr>
+            <th align="center"> 书籍ID </th>
+	        <th align="center"> 书名 </th>
+	        <th align="center"> 作者</th>
+	        <th align="center"> 出版商 </th>
+	        <th align="center"> 出版时间 </th>
+            <th align="center"> 分类 </th>
+            <th align="center"> 图片 </th>
+            <th align="center"> 编辑信息 </th>
+        </tr>
+        {% for book in books %}
+            <tr>
+                <th align="center"> {{book.id}}</th>
+                <th align="center"> {{book.bname}} </th>
+                <th align="center"> {{book.author}}</th>
+                <th align="center"> {{book.publish}} </th>
+                <th align="center"> {{book.pub_data}}</th>
+                <th align="center"> {{ book.book_type }} </td>
+                <th align="center"> 
+                    {% if book.bimage %}
+                         <img src="/static/media/{{ book.bimage.url }}" alt="加载失败" width="30px" style="border-radius:15px">
+                    {% else %}
+                        暂无图片
+                    {% endif %}
+                </td>
+                <th align="center"> <a href="{% url 'library:admin_book_edit' book.id %}"> 点击进入 </a> </th>
+            </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+    
+{% endblock %}

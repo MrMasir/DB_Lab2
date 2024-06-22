@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+
+
+{% block link %}
+    <a href="{% url 'library:admin_book' %}"> 返回 </a> |
+{% endblock %}
+
+
+{% block body %}
+	<h2> 管理员系统 </h2>
+    {% if error %}
+	<div class=error>
+	  <strong>Errror : </strong> {{error}}
+	</div>
+	{% endif %}
+    <form action="{% url 'library:admin_book_edit' book.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h6 style="color: rgb(43, 0, 255)">填写即为修改，不填默认原信息</h6>
+        <h4>书籍名：<br><input type="text" name="bname" placeholder={{book.bname}}></h4>
+        <h4>作者名：<br><input type="text" name="author" placeholder={{book.author}}></h4>
+        <h4>出版社：<br><input type="text" name="publish" placeholder={{book.publish}}></h4>
+        <h4>出版日期：<br><input type="text" name="pub_data" placeholder={{book.pub_data}}></h4>
+        <h4>书籍分类：<br><input type="text" name="book_type" placeholder={{book.book_type}}></h4>
+        <h4>封面：</h4>
+        {% if book.bimage %}
+        <h5 style="color: rgb(43, 0, 255)">已有封面，切换请重选</h5>
+        <input type="file" name="bimage" >
+        {% else %}
+        <input type="file" name="bimage" >
+        {% endif %}
+        <input type="submit" value="提交">
+    </form>
+
+    <form action="{% url 'library:admin_book_edit' book.id %}" method="post" onsubmit="return confirm('确定要删除这本书吗？');">
+        {% csrf_token %}
+        <input type="hidden" name="delete" value="true">
+        <input type="submit" value="删除" style="background-color: red; color: white;">
+    </form>
+
+    {% if message %}
+    <div>
+      <p>{{ message }}</p>
+    </div>
+    {% endif %}
+{% endblock %}

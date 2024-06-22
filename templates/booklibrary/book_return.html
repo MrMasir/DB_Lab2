@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block link %}
+    <a href="{% url 'library:user' %}"> 返回 </a>|
+{% endblock %}
+
+{% block body %}
+<h2>还书</h2>
+<form action="{% url 'library:book_return' %}" method="post">
+    {% csrf_token %}
+    <label for="borrow_id">借阅记录ID：</label>
+    <input type="text"  name="borrow_id">
+    <input type="submit" value="确认还书">
+</form>
+{% endblock %}
+
+{% if message %}
+<div>
+  <p>{{ message }}</p>
+</div>
+{% endif %}

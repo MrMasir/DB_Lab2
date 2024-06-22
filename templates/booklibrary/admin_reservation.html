@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+
+
+{% block link %}
+    <a href="{% url 'library:admin_host' %}"> 返回 </a> |
+{% endblock %}
+
+
+{% block body %}
+	<h2> 管理员系统 </h2>
+    {% if error %}
+	<div class=error>
+	  <strong>Errror : </strong> {{error}}
+	</div>
+	{% endif %}
+    <div class=actions>
+	  <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+	    <dd>
+	      <select name="item">
+            <option value="bname"> 书名 </option>
+            <option value="uname"> 用户名 </option>
+	      </select>
+	      <input type="text" name="query" size="80">
+	      <input type="submit" value="查询">
+	    </dd>
+	  </form>
+	</div>
+    {% if reserves %}
+	<table width="600" border="1" align="center">
+        <tr>
+            <th align="center"> 预约记录ID </th>
+	        <th align="center"> 书名 </th>
+	        <th align="center"> 用户名 </th>
+            <th align="center"> 删除记录 </th>
+        </tr>
+        {% for reserve in reserves %}
+            <tr>
+                <th align="center"> {{reserve.id}}</th>
+                <th align="center"> {{reserve.bname.bname}} </th>
+                <th align="center"> {{reserve.uname.username}}</th>
+                    <th align="center">
+                        <form action="{% url 'library:admin_reserve_delete' reserve.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="submit" value="删除" style="background:none;border:none;color:blue;text-decoration:underline;cursor:pointer;">
+                        </form>
+                    </th>
+            </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+    
+{% endblock %}

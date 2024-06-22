@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block link %}
+	{% if user.headpic %}
+	<img src="/static/media/{{user.headpic.url}}" alt="加载失败" width="30px" style="border-radius:15px" >
+	{% endif %}
+    <a href="{% url 'library:logout' %}"> 退出登录[{{user.username}}] </a> |
+	<a href="{% url 'library:querybook' %}"> 查询/借阅 </a> |
+	<a href="{% url 'library:user_info' %}"> 查看个人信息 </a> |
+	<a href="{% url 'library:borrow_info' %}"> 查看借阅记录 </a> |
+	<a href="{% url 'library:book_return' %}"> 还书 </a>
+{% endblock %}
+
+
+{% block body %}
+{% endblock %}

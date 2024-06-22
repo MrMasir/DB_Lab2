@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+
+
+{% block link %}
+    <a href="{% url 'library:logout' %}"> 退出登录 </a> |
+    <a href="{% url 'library:admin_user' %}"> 用户信息 </a> |
+	<a href="{% url 'library:admin_book' %}"> 书籍信息 </a> |
+	<a href="{% url 'library:admin_borrow' %}"> 借阅信息 </a> |
+	<a href="{% url 'library:admin_reservation' %}"> 预约信息 </a>
+{% endblock %}
+
+
+{% block body %}
+	<h2> 管理员系统 </h2>
+{% endblock %}

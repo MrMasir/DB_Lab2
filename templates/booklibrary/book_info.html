@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block link %}
+    <a href="{% url 'library:querybook' %}"> 返回   </a>|
+{% endblock %}
+
+
+{% block body %}
+<!-- 显示消息 -->
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<div style="display: flex;">
+  <div style="width: 70%;">
+      <h3>图书信息</h3>
+      <p>编号：{{book.id}}</p>
+      <p>书名：{{book.bname}}</p>
+      <p>作者：{{book.author}}</p>
+      <p>书籍分类：{{book.book_type}}</p>
+      <p>出版社：{{book.publish}}</p>
+      <p>出版时间：{{book.pub_data}}</p>
+  </div>
+  <div style="width: 30%;">
+      {% if book.bimage %}
+      <img src="/static/media/{{book.bimage.url}}" alt="加载失败" style="max-width: 100%; border-radius: 15px;">
+      {% else %}
+      <p>无</p>
+      {% endif %}
+  </div>
+</div>
+<div>
+  <h2 > 借阅信息 </h2>
+  {% if res  %}
+  <li> 借阅者姓名 {{borrow.uname}}</li>
+  <li> 借阅日期  {{borrow.borrow_date}}</li>
+  <li> 还书日期  {{borrow.return_date}}</li>
+  <form action="{% url 'library:reserve_book' book.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="预约">
+  </form>
+  {% else %}
+  <li> 无 </li>
+    <form action="{% url 'library:book_info' book.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="借阅">
+    </form>
+  {% endif %}
+</div>
+
+{% if message %}
+<div>
+  <p>{{ message }}</p>
+</div>
+{% endif %}
+
+{% endblock %}

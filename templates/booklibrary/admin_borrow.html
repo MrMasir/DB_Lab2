@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+
+
+{% block link %}
+    <a href="{% url 'library:admin_host' %}"> 返回 </a> |
+{% endblock %}
+
+
+{% block body %}
+	<h2> 管理员系统 </h2>
+    {% if error %}
+	<div class=error>
+	  <strong>Errror : </strong> {{error}}
+	</div>
+	{% endif %}
+    <div class=actions>
+	  <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+	    <dd>
+	      <select name="item">
+            <option value="bname"> 书名 </option>
+            <option value="uname"> 用户名 </option>
+	      </select>
+	      <input type="text" name="query" size="80">
+	      <input type="submit" value="查询">
+	    </dd>
+	  </form>
+	</div>
+    {% if borrows %}
+	<table width="600" border="1" align="center">
+        <tr>
+            <th align="center"> 借阅记录ID </th>
+	        <th align="center"> 书名 </th>
+	        <th align="center"> 用户名 </th>
+	        <th align="center"> 借阅时间 </th>
+            <th align="center"> 归还时间 </th>
+            <th align="center"> 借阅状态 </th>
+            <th align="center"> 删除记录 </th>
+        </tr>
+        {% for borrow in borrows %}
+            <tr>
+                <th align="center"> {{borrow.id}}</th>
+                <th align="center"> {{borrow.bname.bname}} </th>
+                <th align="center"> {{borrow.uname.username}}</th>
+                <th align="center"> {{borrow.borrow_date}} </th>
+                <th align="center"> {{borrow.return_date}}</th>
+                <th align="center">
+                    {% if borrow.status %}
+                        未归还
+                    {% else %}
+                        已归还
+                    {% endif %}
+                </th>
+                    <th align="center">
+                        <form action="{% url 'library:admin_borrow_delete' borrow.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="submit" value="删除" style="background:none;border:none;color:blue;text-decoration:underline;cursor:pointer;">
+                        </form>
+                    </th>
+            </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+    
+{% endblock %}
